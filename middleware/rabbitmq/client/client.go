@@ -1,10 +1,13 @@
 package client
 
 import (
-	"github.com/streadway/amqp"
-	"github.com/jhgv/gocodes/middleware/utils/constants"
-	"github.com/jhgv/gocodes/middleware/utils"
+	"fmt"
 	"log"
+	"time"
+
+	"github.com/jhgv/gocodes/middleware/utils"
+	"github.com/jhgv/gocodes/middleware/utils/constants"
+	"github.com/streadway/amqp"
 )
 
 func StartClient() {
@@ -22,46 +25,54 @@ func StartClient() {
 	responseQueue, err := ch.QueueDeclare(constants.ResponseQueue, false, false, false, false, nil)
 	utils.FailOnError(err, "Failed to declare the response queue")
 
+	// Xlsx file operations
+	xlsBuilder := utils.XlsxBuilder{}
+	fileName := fmt.Sprintf("rabbitmq-%d.xlsx", constants.NumRepetitions)
+	xlsBuilder.SetFileName(fileName)
+	xlsBuilder.CreateHeader()
+	averageFormula := fmt.Sprintf("AVERAGE(A%d:A%d)", xlsBuilder.GetRowNum()+1, constants.NumRepetitions+2)
+	xlsBuilder.SetupAverageFormula(averageFormula)
 
-	//startTimes := make(chan time.Time)
-	//elapsedTimes := make(chan time.Duration)
+	startTimes := make(chan time.Time, constants.NumRepetitions)
+	elapsedTimes := make(chan time.Duration, constants.NumRepetitions)
 	responses, err := ch.Consume(
 		responseQueue.Name, // queue
-		"",     // consumer
-		true,   // auto-ack
-		false,  // exclusive
-		false,  // no-local
-		false,  // no-wait
-		nil,    // args
+		"",                 // consumer
+		true,               // auto-ack
+		false,              // exclusive
+		false,              // no-local
+		false,              // no-wait
+		nil,                // args
 	)
 
-	//go func() {
-	//	for t := range times {
-	//		elapsedReq := time.Since(t)
-	//		log.Println(elapsedReq.String())
-	//	}
-	//}()
+	go func() {
+		for t := range elapsedTimes {
+			xlsBuilder.AddRowData(t.Seconds() * 1000.0)
+		}
+	}()
 
 	count := 0
-	for ; count < constants.NumRepetitions; {
+	for count < constants.NumRepetitions {
 		body := utils.GenerateRandomText(20)
-		//times <- time.Now()
+
 		ch.Publish(
-			"",     // exchange
+			"",                // exchange
 			requestQueue.Name, // routing key
-			false,  // mandatory
-			false,  // immediate
-			amqp.Publishing {
+			false,             // mandatory
+			false,             // immediate
+			amqp.Publishing{
 				ContentType: "text/plain",
 				Body:        []byte(body),
 			})
-
-		count ++
+		startTimes <- time.Now()
+		count++
 	}
 
 	for r := range responses {
-		//elapsedTimes <-
-		log.Printf("[x] Message recieved from server: %s", r.Body)
+		startTime := <-startTimes
+		log.Print(len(startTimes))
+		elapsedTimes <- time.Since(startTime)
+		log.Printf("Message from server: %s", r.Body)
+		xlsBuilder.GenerateFile()
 	}
-
 }
