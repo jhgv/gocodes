@@ -11,7 +11,7 @@ import (
 	"github.com/jhgv/gocodes/middleware/models"
 )
 
-const NumRepetitions int = 1000
+const NumRepetitions int = 10000
 
 func startTCPServer() {
 	listener, _ := net.Listen("tcp", ":8081")
@@ -49,7 +49,7 @@ func startTCPClient() {
 
 	start := time.Now()
 	for i := 0; i < NumRepetitions; i++ {
-		messageToServer := models.Request{Message: utils.GenerateRandomText(450)}
+		messageToServer := models.Request{Message: utils.GenerateRandomText(100)}
 		startReq := time.Now()
 		jsonCoder := json.NewEncoder(conn)
 		_ = jsonCoder.Encode(messageToServer)

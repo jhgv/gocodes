@@ -13,7 +13,7 @@ import (
 )
 
 // Number of repetitions
-const NumRepetitions int = 1000
+const NumRepetitions int = 10000
 
 func startUDPServer() {
 	service := ":8888"
@@ -33,12 +33,6 @@ func startUDPServer() {
 		}
 		resp, _ := json.Marshal(msgToClient)
 		conn.WriteTo(resp, addr)
-
-		//jsonDecoder.Decode(&msgFromClient)
-		////utils.CheckError(err)
-		//msgToClient := models.Response{Message: utils.ProcessedMessage(msgFromClient.Message)}
-		//resp, _ := json.Marshal(msgToClient)
-		//conn.WriteTo(resp, udpAddr)
 	}
 }
 
@@ -62,7 +56,7 @@ func startUDPClient() {
 	startTotal := time.Now()
 	for i := 0; i < NumRepetitions; i++ {
 		var messageFromServer models.Response
-		messageToServer := models.Request{Message: utils.GenerateRandomText(400)}
+		messageToServer := models.Request{Message: utils.GenerateRandomText(100)}
 		startReq := time.Now()
 
 		jsonCoder := json.NewEncoder(conn)

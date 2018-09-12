@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="085a8b4c-d7e9-4d35-a01d-67e279e48971" name="Default Changelist" comment="" />
+    <list default="true" id="085a8b4c-d7e9-4d35-a01d-67e279e48971" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/middleware/rabbitmq/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/rabbitmq/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/tcp/tcp-1000.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/tcp/tcp-1000.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/tcp/tcp-10000.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/tcp/tcp-10000.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/tcp/tcp-2500.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/tcp/tcp-2500.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/tcp/tcp-5000.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/tcp/tcp-5000.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/tcp/tcp-7500.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/tcp/tcp-7500.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/tcp/tcp.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/tcp/tcp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/udp/udp-1000.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/udp/udp-1000.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/udp/udp-10000.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/udp/udp-10000.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/udp/udp-2500.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/udp/udp-2500.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/udp/udp-5000.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/udp/udp-5000.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/udp/udp-7500.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/udp/udp-7500.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/udp/udp.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/udp/udp.go" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,24 +35,29 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="go" value="42" />
+          <entry key="go" value="43" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="42" />
+          <entry key="Go" value="43" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="5303" />
+          <entry key="go" value="5547" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="5303" />
+          <entry key="Go" value="5547" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.go.postfix.template.usages.trigger">
+        <counts>
+          <entry key=".var" value="1" />
         </counts>
       </usages-collector>
     </session>
@@ -48,11 +67,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/client/client.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="258">
+              <caret line="27" column="16" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="27" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -60,7 +79,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/server/server.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
+            <state relative-caret-position="304">
               <caret line="45" column="35" lean-forward="true" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="35" />
             </state>
           </provider>
@@ -69,20 +88,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/middleware/tcp/tcp.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+            <state relative-caret-position="183">
+              <caret line="58" column="42" lean-forward="true" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="42" />
               <folding>
                 <element signature="e#14#171#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/middleware/udp/udp.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="75" column="47" lean-forward="true" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -121,6 +131,9 @@
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -140,10 +153,10 @@
         <option value="$PROJECT_DIR$/middleware/rabbitmq/client.go" />
         <option value="$PROJECT_DIR$/middleware/rabbitmq/server.go" />
         <option value="$PROJECT_DIR$/middleware/rabbitmq/main.go" />
-        <option value="$PROJECT_DIR$/middleware/rabbitmq/client/client.go" />
         <option value="$PROJECT_DIR$/middleware/rabbitmq/server/server.go" />
         <option value="$PROJECT_DIR$/middleware/tcp/tcp.go" />
         <option value="$PROJECT_DIR$/middleware/udp/udp.go" />
+        <option value="$PROJECT_DIR$/middleware/rabbitmq/client/client.go" />
       </list>
     </option>
   </component>
@@ -158,6 +171,9 @@
     <option name="y" value="26" />
     <option name="width" value="1432" />
     <option name="height" value="858" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -312,15 +328,15 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" sideWeight="0.5019455" side_tool="true" visible="true" weight="0.24964029" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49805447" visible="true" weight="0.24964029" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49805447" visible="true" weight="0.24964029" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" weight="0.32898173" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32898173" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32898173" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32898173" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -467,34 +483,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding>
-            <element signature="e#14#132#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/client/client.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/go/src/net/udpsock.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
           <caret line="70" column="5" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/server/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="45" column="35" lean-forward="true" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -505,20 +497,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/middleware/udp/udp.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding>
+            <element signature="e#14#132#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/server/server.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="45" column="35" lean-forward="true" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/middleware/tcp/tcp.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+        <state relative-caret-position="183">
+          <caret line="58" column="42" lean-forward="true" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="42" />
           <folding>
             <element signature="e#14#171#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/middleware/udp/udp.go">
+    <entry file="file://$PROJECT_DIR$/middleware/rabbitmq/client/client.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="75" column="47" lean-forward="true" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
+        <state relative-caret-position="258">
+          <caret line="27" column="16" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="27" selection-end-column="16" />
         </state>
       </provider>
     </entry>
