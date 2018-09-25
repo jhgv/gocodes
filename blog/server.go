@@ -4,10 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jhgv/gocodes/blog/settings/urls"
+	"github.com/jhgv/gocodes/blog/settings"
 )
 
 func main() {
-	urls.MapUrls()
+	settings.MapUrls()
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
