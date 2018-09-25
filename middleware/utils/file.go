@@ -1,21 +1,20 @@
 package utils
 
 import (
-	"github.com/tealeg/xlsx"
 	"fmt"
+
+	"github.com/tealeg/xlsx"
 )
 
-
 type XlsxBuilder struct {
-	fileName string
-	average float64
-	totalTime float64
-	file *xlsx.File
-	averageCell *xlsx.Cell
+	fileName      string
+	average       float64
+	totalTime     float64
+	file          *xlsx.File
+	averageCell   *xlsx.Cell
 	totalTimeCell *xlsx.Cell
-	sheet *xlsx.Sheet
+	sheet         *xlsx.Sheet
 }
-
 
 func (b *XlsxBuilder) CreateHeader() {
 	b.file = xlsx.NewFile()
@@ -35,6 +34,13 @@ func (b *XlsxBuilder) CreateHeader() {
 	b.averageCell = secondRow.AddCell()
 	b.totalTimeCell = secondRow.AddCell()
 
+}
+
+func (b *XlsxBuilder) SetBasicMetricsFile(fileName string, numRepetitions int) {
+	b.SetFileName(fileName)
+	b.CreateHeader()
+	averageFormula := fmt.Sprintf("AVERAGE(A%d:A%d)", b.GetRowNum()+1, numRepetitions+2)
+	b.SetupAverageFormula(averageFormula)
 }
 
 func (b *XlsxBuilder) SetupAverageFormula(formula string) {

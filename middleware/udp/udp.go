@@ -1,15 +1,16 @@
 package main
 
 import (
+	"encoding/json"
+	"flag"
 	"fmt"
 	"net"
 	"os"
-	"time"
-	"encoding/json"
-	"github.com/jhgv/gocodes/middleware/utils"
-	"github.com/jhgv/gocodes/middleware/models"
-	"flag"
 	"strings"
+	"time"
+
+	"github.com/jhgv/gocodes/middleware/models"
+	"github.com/jhgv/gocodes/middleware/utils"
 )
 
 // Number of repetitions
@@ -48,10 +49,7 @@ func startUDPClient() {
 	// Xlsx file operations
 	xlsBuilder := utils.XlsxBuilder{}
 	fileName := fmt.Sprintf("udp-%d.xlsx", NumRepetitions)
-	xlsBuilder.SetFileName(fileName)
-	xlsBuilder.CreateHeader()
-	averageFormula := fmt.Sprintf("AVERAGE(A%d:A%d)", xlsBuilder.GetRowNum() + 1, NumRepetitions + 2)
-	xlsBuilder.SetupAverageFormula(averageFormula)
+	xlsBuilder.SetBasicMetricsFile(fileName)
 
 	startTotal := time.Now()
 	for i := 0; i < NumRepetitions; i++ {
