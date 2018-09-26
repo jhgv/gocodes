@@ -2,7 +2,7 @@ package handler
 
 // ClientRequestHandler : Interface for client request handlers
 type ClientRequestHandler interface {
-	SetupSockets() error
-	Send() error
-	Recieve() []byte
+	SetupSocket(host string, port int) error
+	Send(message []byte) error
+	Recieve() ([]byte, error)
 }

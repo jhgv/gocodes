@@ -2,24 +2,47 @@ package main
 
 import (
 	"log"
-	"net"
-	"net/http"
-	"net/rpc"
+	"strings"
 
-	"github.com/jhgv/gocodes/middleware/rpc/upperfy"
+	"github.com/jhgv/gocodes/middleware/rpc/server/handler"
+	"github.com/jhgv/gocodes/middleware/rpc/utils/protocols"
 )
 
-func main() {
-	forever := make(chan int)
-	textfy := new(upperfy.Textfy)
-	rpc.Register(textfy)
-	rpc.HandleHTTP()
-	l, e := net.Listen("tcp", ":1234")
-	if e != nil {
-		log.Fatal("listen error: ", e)
+const (
+	protocol = "udp"
+	host     = "localhost"
+	port     = 8081
+)
+
+func StartServer(server handler.ServerRequestHandler) {
+	err := server.SetupSocket(host, port)
+	if err != nil {
+		log.Fatal("Error setting socket up", err)
 	}
-	log.Println("Server listenning on port :8081 ...")
-	// No handler
-	go http.Serve(l, nil)
+	for {
+		message, err := server.Recieve()
+		if err != nil {
+			log.Fatal("Error recieving message from client", err)
+		}
+		server.Send(message)
+	}
+
+}
+
+func main() {
+	forever := make(chan bool)
+	log.Printf("Starting %s handler server\n", strings.ToUpper(protocol))
+	switch protocol {
+	case protocols.TCP:
+		server := new(handler.TCPServerRequestHanlder)
+		go StartServer(server)
+	case protocols.UDP:
+		server := new(handler.UDPServerRequestHanlder)
+		go StartServer(server)
+	case protocols.RPC:
+		log.Println("Not available yet")
+	default:
+		log.Println("Not available yet")
+	}
 	<-forever
 }

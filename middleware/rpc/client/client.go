@@ -1,45 +1,51 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/rpc"
-	"time"
 
-	"github.com/jhgv/gocodes/middleware/rpc/upperfy"
+	"github.com/jhgv/gocodes/middleware/rpc/client/handler"
+	"github.com/jhgv/gocodes/middleware/rpc/utils/constants"
+	"github.com/jhgv/gocodes/middleware/rpc/utils/protocols"
 	"github.com/jhgv/gocodes/middleware/utils"
 )
 
-const numRepetitions int = 1000
-const serverPort string = "1234"
-const serverHost string = "localhost"
+const (
+	protocol = "udp"
+	host     = "localhost"
+	port     = 8081
+)
+
+func SendMessage(client handler.ClientRequestHandler) {
+
+	for i := 0; i < constants.NumRepetitions; i++ {
+		err := client.SetupSocket(host, port)
+		if err != nil {
+			log.Fatal("Error starting connection: ", err)
+		}
+		message := utils.GenerateRandomText(30)
+		err = client.Send([]byte(message))
+		if err != nil {
+			log.Fatal("Error starting connection: ", err)
+		}
+		messageFromServer, err := client.Recieve()
+		if err != nil {
+			log.Fatal("Error recieveing message from server: ", err)
+		}
+		log.Printf("Message from server: { %s }\n", string(messageFromServer))
+	}
+}
 
 func main() {
-	serverAdress := fmt.Sprintf("%s:%s", serverHost, serverPort)
-	client, err := rpc.DialHTTP("tcp", serverAdress)
-	if err != nil {
-		log.Fatal("dialing:", err)
+	switch protocol {
+	case protocols.TCP:
+		client := new(handler.TCPClientHandler)
+		SendMessage(client)
+	case protocols.UDP:
+		client := new(handler.UDPClientHandler)
+		SendMessage(client)
+	case protocols.RPC:
+		log.Println("Not available yet")
+	default:
+		log.Println("Not available yet")
 	}
-
-	xlsBuilder := utils.XlsxBuilder{}
-	fileName := fmt.Sprintf("rpc-%d.xlsx", numRepetitions)
-	xlsBuilder.SetBasicMetricsFile(fileName, numRepetitions)
-
-	for i := 0; i < numRepetitions; i++ {
-		text := utils.GenerateRandomText(30)
-		args := &upperfy.Args{Text: text}
-		var reply string
-		start := time.Now()
-		err = client.Call("Textfy.UpperText", args, &reply)
-		elapsed := time.Since(start)
-		xlsBuilder.AddRowData(elapsed.Seconds() * 1000)
-		if err != nil {
-			log.Fatal("textfy error: ", err)
-		}
-		// log.Printf("Changed from { %s } to { %s }", text, reply)
-
-		time.Sleep(10 * time.Millisecond)
-	}
-	xlsBuilder.GenerateFile()
-
 }

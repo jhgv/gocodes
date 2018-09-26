@@ -2,7 +2,7 @@ package handler
 
 // ServerRequestHandler : Interface for server request handlers
 type ServerRequestHandler interface {
-	SetupSockets() error
-	Send() error
-	Recieve() []byte
+	SetupSocket(host string, port int) error
+	Send(message []byte) error
+	Recieve() ([]byte, error)
 }
