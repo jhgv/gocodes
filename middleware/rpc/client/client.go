@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/jhgv/gocodes/middleware/rpc/client/handler"
 	"github.com/jhgv/gocodes/middleware/rpc/utils/constants"
@@ -10,9 +11,9 @@ import (
 )
 
 const (
-	protocol = "udp"
+	protocol = "rpc"
 	host     = "localhost"
-	port     = 8081
+	port     = 1234
 )
 
 func SendMessage(client handler.ClientRequestHandler) {
@@ -32,6 +33,8 @@ func SendMessage(client handler.ClientRequestHandler) {
 			log.Fatal("Error recieveing message from server: ", err)
 		}
 		log.Printf("Message from server: { %s }\n", string(messageFromServer))
+
+		time.Sleep(10 * time.Millisecond)
 	}
 }
 
@@ -44,7 +47,8 @@ func main() {
 		client := new(handler.UDPClientHandler)
 		SendMessage(client)
 	case protocols.RPC:
-		log.Println("Not available yet")
+		client := new(handler.RPCClientHandler)
+		SendMessage(client)
 	default:
 		log.Println("Not available yet")
 	}
