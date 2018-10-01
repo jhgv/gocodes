@@ -13,7 +13,7 @@ import (
 const (
 	protocol = "rpc"
 	host     = "localhost"
-	port     = 1234
+	port     = 8081
 )
 
 func StartClient(client handler.ClientRequestHandler) {
@@ -35,7 +35,6 @@ func StartClient(client handler.ClientRequestHandler) {
 		elapsedReq := time.Since(startReq)
 		// log.Printf("%f", elapsedReq.Seconds()*1000.0)
 		xlsBuilder.AddRowData(elapsedReq.Seconds() * 1000.0)
-		time.Sleep(10 * time.Millisecond)
 		// if err != nil {
 		// 	log.Fatal("Error recieveing message from server: ", err)
 		// }
@@ -54,7 +53,7 @@ func main() {
 		StartClient(client)
 	case protocols.RPC:
 		client := new(handler.RPCClientHandler)
-		SendMessage(client)
+		StartClient(client)
 	default:
 		log.Println("Not available yet")
 	}
