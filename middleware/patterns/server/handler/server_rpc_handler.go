@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"net/rpc"
 
-	"github.com/jhgv/gocodes/middleware/rpc/utils/protocols"
+	"github.com/jhgv/gocodes/middleware/patterns/utils/protocols"
 
-	"github.com/jhgv/gocodes/middleware/rpc/upperfy"
+	"github.com/jhgv/gocodes/middleware/patterns/upperfy"
 )
 
 type RPCServerRequestHanlder struct {

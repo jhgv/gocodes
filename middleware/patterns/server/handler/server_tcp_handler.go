@@ -7,7 +7,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/jhgv/gocodes/middleware/rpc/utils/protocols"
+	"github.com/jhgv/gocodes/middleware/patterns/utils/protocols"
 )
 
 type TCPServerRequestHanlder struct {

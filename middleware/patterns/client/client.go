@@ -4,9 +4,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/jhgv/gocodes/middleware/rpc/client/handler"
-	"github.com/jhgv/gocodes/middleware/rpc/utils/constants"
-	"github.com/jhgv/gocodes/middleware/rpc/utils/protocols"
+	"github.com/jhgv/gocodes/middleware/patterns/client/handler"
+	"github.com/jhgv/gocodes/middleware/patterns/utils/constants"
+	"github.com/jhgv/gocodes/middleware/patterns/utils/protocols"
 	"github.com/jhgv/gocodes/middleware/utils"
 )
 
@@ -35,6 +35,7 @@ func StartClient(client handler.ClientRequestHandler) {
 		elapsedReq := time.Since(startReq)
 		// log.Printf("%f", elapsedReq.Seconds()*1000.0)
 		xlsBuilder.AddRowData(elapsedReq.Seconds() * 1000.0)
+		time.Sleep(10 * time.Millisecond)
 		// if err != nil {
 		// 	log.Fatal("Error recieveing message from server: ", err)
 		// }

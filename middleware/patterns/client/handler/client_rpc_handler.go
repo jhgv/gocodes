@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/rpc"
 
-	"github.com/jhgv/gocodes/middleware/rpc/upperfy"
+	"github.com/jhgv/gocodes/middleware/patterns/upperfy"
 )
 
 type RPCClientHandler struct {

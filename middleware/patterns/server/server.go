@@ -4,8 +4,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/jhgv/gocodes/middleware/rpc/server/handler"
-	"github.com/jhgv/gocodes/middleware/rpc/utils/protocols"
+	"github.com/jhgv/gocodes/middleware/patterns/server/handler"
+	"github.com/jhgv/gocodes/middleware/patterns/utils/protocols"
 )
 
 const (
