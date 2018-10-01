@@ -11,7 +11,7 @@ import (
 const (
 	protocol = "rpc"
 	host     = "localhost"
-	port     = 8081
+	port     = 1234
 )
 
 func StartServer(server handler.ServerRequestHandler) {
@@ -40,7 +40,8 @@ func main() {
 		server := new(handler.UDPServerRequestHanlder)
 		go StartServer(server)
 	case protocols.RPC:
-		log.Println("Not available yet")
+		server := new(handler.RPCServerRequestHanlder)
+		go StartServer(server)
 	default:
 		log.Println("Not available yet")
 	}

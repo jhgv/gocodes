@@ -9,6 +9,7 @@ import (
 
 type RPCClientHandler struct {
 	client *rpc.Client
+	reply  string
 }
 
 func (ch *RPCClientHandler) SetupSocket(host string, port int) error {
@@ -33,5 +34,5 @@ func (ch *RPCClientHandler) Send(message []byte) error {
 }
 
 func (ch *RPCClientHandler) Recieve() ([]byte, error) {
-	return nil, nil
+	return []byte(ch.reply), nil
 }
