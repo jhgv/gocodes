@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/jhgv/gocodes/middleware/rpc/client/handler"
 	"github.com/jhgv/gocodes/middleware/rpc/utils/constants"
@@ -10,39 +11,47 @@ import (
 )
 
 const (
-	protocol = "udp"
+	protocol = "rpc"
 	host     = "localhost"
 	port     = 8081
 )
 
-func SendMessage(client handler.ClientRequestHandler) {
-
+func StartClient(client handler.ClientRequestHandler) {
+	xlsBuilder := utils.XlsxBuilder{}
+	xlsBuilder.SetBasicMetricsFile(protocol, constants.NumRepetitions)
 	for i := 0; i < constants.NumRepetitions; i++ {
-		err := client.SetupSocket(host, port)
-		if err != nil {
-			log.Fatal("Error starting connection: ", err)
-		}
-		message := utils.GenerateRandomText(30)
-		err = client.Send([]byte(message))
-		if err != nil {
-			log.Fatal("Error starting connection: ", err)
-		}
-		messageFromServer, err := client.Recieve()
-		if err != nil {
-			log.Fatal("Error recieveing message from server: ", err)
-		}
-		log.Printf("Message from server: { %s }\n", string(messageFromServer))
+		client.SetupSocket(host, port)
+		// if err != nil {
+		// 	log.Fatal("Error starting connection: ", err)
+		// }
+		message := utils.GenerateRandomText(200)
+
+		startReq := time.Now()
+		client.Send([]byte(message))
+		// if err != nil {
+		// 	log.Fatal("Error starting connection: ", err)
+		// }
+		client.Recieve()
+		elapsedReq := time.Since(startReq)
+		// log.Printf("%f", elapsedReq.Seconds()*1000.0)
+		xlsBuilder.AddRowData(elapsedReq.Seconds() * 1000.0)
+		time.Sleep(10 * time.Millisecond)
+		// if err != nil {
+		// 	log.Fatal("Error recieveing message from server: ", err)
+		// }
+		// log.Printf("Message from server: { %s }\n", string(messageFromServer))
 	}
+	xlsBuilder.GenerateFile()
 }
 
 func main() {
 	switch protocol {
 	case protocols.TCP:
 		client := new(handler.TCPClientHandler)
-		SendMessage(client)
+		StartClient(client)
 	case protocols.UDP:
 		client := new(handler.UDPClientHandler)
-		SendMessage(client)
+		StartClient(client)
 	case protocols.RPC:
 		log.Println("Not available yet")
 	default:

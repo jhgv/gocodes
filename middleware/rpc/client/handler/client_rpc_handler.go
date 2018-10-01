@@ -12,11 +12,11 @@ type RPCClientHandler struct {
 }
 
 func (ch *RPCClientHandler) SetupSocket(host string, port int) error {
-	address := fmt.Sprintf("%s:%s", host, port)
-	client, err := rpc.DialHTTP("tcp", address)
-	if err != nil {
-		return err
-	}
+	address := fmt.Sprintf("%s:%d", host, port)
+	client, _ := rpc.DialHTTP("tcp", address)
+	// if err != nil {
+	// 	return err
+	// }
 	ch.client = client
 	return nil
 }
@@ -25,10 +25,10 @@ func (ch *RPCClientHandler) Send(message []byte) error {
 	text := string(message)
 	args := &upperfy.Args{Text: text}
 	var reply string
-	err := ch.client.Call("Textfy.UpperText", args, &reply)
-	if err != nil {
-		return err
-	}
+	ch.client.Call("Textfy.UpperText", args, &reply)
+	// if err != nil {
+	// 	return err
+	// }
 	return nil
 }
 

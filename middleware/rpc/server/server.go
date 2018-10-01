@@ -9,21 +9,21 @@ import (
 )
 
 const (
-	protocol = "udp"
+	protocol = "rpc"
 	host     = "localhost"
 	port     = 8081
 )
 
 func StartServer(server handler.ServerRequestHandler) {
-	err := server.SetupSocket(host, port)
-	if err != nil {
-		log.Fatal("Error setting socket up", err)
-	}
+	server.SetupSocket(host, port)
+	// if err != nil {
+	// 	log.Fatal("Error setting socket up", err)
+	// }
 	for {
-		message, err := server.Recieve()
-		if err != nil {
-			log.Fatal("Error recieving message from client", err)
-		}
+		message, _ := server.Recieve()
+		// if err != nil {
+		// 	log.Fatal("Error recieving message from client", err)
+		// }
 		server.Send(message)
 	}
 

@@ -37,7 +37,7 @@ func (b *XlsxBuilder) CreateHeader() {
 }
 
 func (b *XlsxBuilder) SetBasicMetricsFile(fileName string, numRepetitions int) {
-	b.SetFileName(fileName)
+	b.SetFileName(fmt.Sprintf("%s-%d.xlsx", fileName, numRepetitions))
 	b.CreateHeader()
 	averageFormula := fmt.Sprintf("AVERAGE(A%d:A%d)", b.GetRowNum()+1, numRepetitions+2)
 	b.SetupAverageFormula(averageFormula)
