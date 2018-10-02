@@ -1,11 +1,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net"
 	"net/http"
 	"net/rpc"
+	"strings"
 	"time"
 
 	"github.com/jhgv/gocodes/middleware/patterns/upperfy"
@@ -15,11 +17,13 @@ import (
 )
 
 const protocol = "rpc"
+const host = "localhost"
+const port int = 8081
 
 func startClient(host string, port int) {
 	address := fmt.Sprintf("%s:%d", host, port)
-	xlsBuilder := utils.XlsxBuilder{}
-	xlsBuilder.SetBasicMetricsFile(protocol, constants.NumRepetitions)
+	totalTime := 0.0
+
 	for i := 0; i < constants.NumRepetitions; i++ {
 		client, _ := rpc.DialHTTP("tcp", address)
 		// if err != nil {
@@ -34,14 +38,16 @@ func startClient(host string, port int) {
 		// 	log.Fatal("Error starting connection: ", err)
 		// }
 		elapsedReq := time.Since(startReq)
+		totalTime = totalTime + (elapsedReq.Seconds() * 1000.0)
 		// log.Printf("%f", elapsedReq.Seconds()*1000.0)
-		xlsBuilder.AddRowData(elapsedReq.Seconds() * 1000.0)
+		// log.Printf("Message from server: { %s }\n", reply)
 		time.Sleep(10 * time.Millisecond)
+
 		// if err != nil {
 		// 	log.Fatal("Error recieveing message from server: ", err)
 		// }
-		// log.Printf("Message from server: { %s }\n", string(messageFromServer))
 	}
+	log.Printf("Average request time: %f", totalTime/float64(constants.NumRepetitions))
 }
 
 func startServer(port int) {
@@ -59,5 +65,11 @@ func startServer(port int) {
 }
 
 func main() {
-
+	flagMode := flag.String("mode", "server", "start in client or server mode")
+	flag.Parse()
+	if strings.ToLower(*flagMode) == "server" {
+		startServer(port)
+	} else {
+		startClient(host, port)
+	}
 }
