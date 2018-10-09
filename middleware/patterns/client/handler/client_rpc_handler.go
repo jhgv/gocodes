@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/rpc"
 
-	"github.com/jhgv/gocodes/middleware/patterns/upperfy"
+	"github.com/jhgv/gocodes/middleware/patterns/app"
 )
 
 type RPCClientHandler struct {
@@ -24,7 +24,7 @@ func (ch *RPCClientHandler) SetupSocket(host string, port int) error {
 
 func (ch *RPCClientHandler) Send(message []byte) error {
 	text := string(message)
-	args := &upperfy.Args{Text: text}
+	args := &app.Args{Text: text}
 	var reply string
 	err := ch.client.Call("Textfy.UpperText", args, &reply)
 	ch.reply = reply
