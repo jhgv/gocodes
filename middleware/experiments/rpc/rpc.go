@@ -47,7 +47,7 @@ func startClient(host string, port int) {
 		// 	log.Fatal("Error recieveing message from server: ", err)
 		// }
 	}
-	log.Printf("Average request time: %f ms", totalTime/float64(constants.NumRepetitions))
+	log.Printf("Average request time: %f ms for %d requests", totalTime/float64(constants.NumRepetitions), constants.NumRepetitions)
 }
 
 func startServer(port int) {
