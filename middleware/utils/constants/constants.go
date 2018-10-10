@@ -1,8 +1,9 @@
 package constants
 
+// Constant value for client/server application
 const (
-	RabbitMQHost       = "amqp://guest:guest@127.0.0.1:5672"
-	RequestQueue       = "req"
-	ResponseQueue      = "res"
-	NumRepetitions int = 10000
+	NumRepetitions      int    = 5000
+	UpperTextOperation  string = "UpperText"
+	LowerTextOperation  string = "LowerText"
+	InvertTextOperation string = "InvertText"
 )

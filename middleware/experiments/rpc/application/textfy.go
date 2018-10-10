@@ -1,4 +1,4 @@
-package app
+package application
 
 import "strings"
 
@@ -11,7 +11,7 @@ type Args struct {
 }
 
 // UpperText :
-func (u *Textfy) UpperText(message string, reply *string) error {
-	*reply = strings.ToUpper(message)
+func (u *Textfy) UpperText(args *Args, reply *string) error {
+	*reply = strings.ToUpper(args.Text)
 	return nil
 }

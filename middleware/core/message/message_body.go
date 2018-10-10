@@ -13,7 +13,7 @@ type RequestHeader struct {
 }
 
 type ReplyBody struct {
-	OperationResult string
+	TextResult string
 }
 
 type ReplyHeader struct {

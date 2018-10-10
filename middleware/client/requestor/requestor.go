@@ -3,8 +3,8 @@ package requestor
 import (
 	"encoding/json"
 
-	"github.com/jhgv/gocodes/middleware/patterns/client/handler"
-	"github.com/jhgv/gocodes/middleware/patterns/message"
+	"github.com/jhgv/gocodes/middleware/client/handler"
+	"github.com/jhgv/gocodes/middleware/core/message"
 )
 
 type Requestor struct {
@@ -28,7 +28,8 @@ func (r *Requestor) Invoke(inv Invocation) (Termination, error) {
 	messageMarshalled, _ := json.Marshal(messageToBeMarshalled)
 
 	// Communication process through request handler
-	client := new(handler.RPCClientHandler)
+	client := new(handler.TCPClientHandler)
+	client.SetupSocket(inv.GetHost(), inv.GetPort())
 	client.Send(messageMarshalled)
 	messageToBeUnmarshalled, _ = client.Recieve()
 
@@ -36,6 +37,6 @@ func (r *Requestor) Invoke(inv Invocation) (Termination, error) {
 	messageUnmarshalled := message.Message{}
 	json.Unmarshal(messageToBeUnmarshalled, &messageUnmarshalled)
 
-	termination.SetResult(messageUnmarshalled.Body.ReplyBody.OperationResult)
+	termination.SetResult(messageUnmarshalled.Body.ReplyBody.TextResult)
 	return termination, nil
 }
