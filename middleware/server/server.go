@@ -7,7 +7,7 @@ import (
 
 const (
 	host       = "localhost"
-	port       = 8081
+	port       = 7777
 	objectName = "TextHelper"
 	objectID   = 9999
 )

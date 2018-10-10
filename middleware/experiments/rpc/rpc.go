@@ -18,22 +18,23 @@ import (
 
 const protocol = "rpc"
 const host = "localhost"
-const port int = 8081
+const port int = 7777
 
 func startClient(host string, port int) {
 	address := fmt.Sprintf("%s:%d", host, port)
 	totalTime := 0.0
-
+	var reply string
 	for i := 0; i < constants.NumRepetitions; i++ {
-		client, _ := rpc.DialHTTP("tcp", address)
-		// if err != nil {
-		// 	log.Fatal("Error starting connection: ", err)
-		// }
+		client, err := rpc.DialHTTP("tcp", address)
+		if err != nil {
+			log.Fatal("Error starting connection: ", err)
+		}
 		message := utils.GenerateRandomText(200)
 		startReq := time.Now()
 		args := &application.Args{Text: message}
-		var reply string
+
 		client.Call("Textfy.UpperText", args, &reply)
+
 		// if err != nil {
 		// 	log.Fatal("Error starting connection: ", err)
 		// }
@@ -41,6 +42,7 @@ func startClient(host string, port int) {
 		totalTime = totalTime + (elapsedReq.Seconds() * 1000.0)
 		// log.Printf("%f", elapsedReq.Seconds()*1000.0)
 		// log.Printf("Message from server: { %s }\n", reply)
+		client.Close()
 		time.Sleep(10 * time.Millisecond)
 
 		// if err != nil {

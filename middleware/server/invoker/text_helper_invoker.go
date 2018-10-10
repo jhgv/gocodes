@@ -31,7 +31,6 @@ func (thi *TextHelperInvoker) Invoke(cp *proxy.TextHelperProxy) {
 		termination.SetResult(resultText)
 		// Creating message
 		messageToBeMarshalled := &message.Message{
-			Test: "hello",
 			Body: message.MessageBody{
 				ReplyHeader: message.ReplyHeader{ReplyStatus: 0, RequestID: 0, ServiceContext: ""},
 				ReplyBody:   message.ReplyBody{TextResult: termination.GetResult()},
