@@ -1,13 +1,13 @@
 package requestor
 
 type Termination struct {
-	result string
+	result interface{}
 }
 
-func (t *Termination) SetResult(result string) {
+func (t *Termination) SetResult(result interface{}) {
 	t.result = result
 }
 
-func (t *Termination) GetResult() string {
+func (t *Termination) GetResult() interface{} {
 	return t.result
 }

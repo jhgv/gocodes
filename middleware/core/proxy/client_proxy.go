@@ -1,28 +1,28 @@
 package proxy
 
 type ClientProxy struct {
-	host string
-	port int
-	id   int
+	Host string
+	Port int
+	ID   int
 }
 
 func (cp *ClientProxy) GetHost() string {
-	return cp.host
+	return cp.Host
 }
 func (cp *ClientProxy) SetHost(host string) {
-	cp.host = host
+	cp.Host = host
 }
 func (cp *ClientProxy) GetPort() int {
-	return cp.port
+	return cp.Port
 }
 func (cp *ClientProxy) SetPort(port int) {
-	cp.port = port
+	cp.Port = port
 }
 
 func (cp *ClientProxy) SetID(id int) {
-	cp.id = id
+	cp.ID = id
 }
 
 func (cp *ClientProxy) GetID() int {
-	return cp.id
+	return cp.ID
 }

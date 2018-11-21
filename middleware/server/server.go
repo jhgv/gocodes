@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/jhgv/gocodes/middleware/common/naming"
 	"github.com/jhgv/gocodes/middleware/core/proxy"
 	"github.com/jhgv/gocodes/middleware/server/invoker"
 )
@@ -8,16 +9,20 @@ import (
 const (
 	host       = "localhost"
 	port       = 7777
-	objectName = "TextHelper"
+	namingServerPort       = 9995
+	objectName = "FileConverter"
 	objectID   = 9999
 )
 
 func main() {
-	invoker := &invoker.TextHelperInvoker{}
-	textHelperProxy := &proxy.TextHelperProxy{}
-	textHelperProxy.SetID(objectID)
-	textHelperProxy.SetHost(host)
-	textHelperProxy.SetPort(port)
 
-	invoker.Invoke(textHelperProxy)
+	namingservice := naming.NewNamingProxy(host, namingServerPort)
+	fileConverterInvoker := &invoker.FileConverterInvoker{}
+	fileConverterProxy := proxy.FileConverterProxy{}
+	fileConverterProxy.SetID(objectID)
+	fileConverterProxy.SetHost(host)
+	fileConverterProxy.SetPort(port)
+
+	go namingservice.Bind(objectName, fileConverterProxy)
+	fileConverterInvoker.Invoke(fileConverterProxy)
 }

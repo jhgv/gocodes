@@ -2,9 +2,11 @@ package invoker
 
 import (
 	"encoding/json"
-	"log"
-
+	"github.com/jhgv/gocodes/middleware/core/security"
 	"github.com/jhgv/gocodes/middleware/utils/constants"
+	"io/ioutil"
+	"log"
+	"os"
 
 	"github.com/jhgv/gocodes/middleware/core/message"
 	"github.com/jhgv/gocodes/middleware/core/proxy"
@@ -13,27 +15,40 @@ import (
 	"github.com/jhgv/gocodes/middleware/server/objects"
 )
 
-type TextHelperInvoker struct {
+type FileConverterInvoker struct {
 }
 
-func (thi *TextHelperInvoker) Invoke(cp *proxy.TextHelperProxy) {
+func (fci *FileConverterInvoker) Invoke(cp proxy.FileConverterProxy) {
 	srh := new(handler.TCPServerRequestHanlder)
 	srh.SetupSocket(cp.GetHost(), cp.GetPort())
+
+	var encrypter = security.Encrypter{}
 
 	var msgToBeUnmarshalled []byte
 	var msgUnmarshalled = message.Message{}
 
 	var termination requestor.Termination
-	var textHelper = &objects.TextHelper{}
+	var fileConverter = &objects.FileConverter{}
 
-	var replyHandler = func(resultText string) {
+	var replyHandler = func(convertedFile os.File) {
+		//fileInfo, _ := convertedFile.Stat()
+		// make file bytes to send back
+		//fileInfo, err := convertedFile.Stat()
+		//if err != nil {
+		//	log.Fatal(err)
+		//}
+
+		b, _ := ioutil.ReadFile("file.csv")
+		//convertedFile.Read(b)
+
 		// Unmarshalling result
-		termination.SetResult(resultText)
+		termination.SetResult(b)
+
 		// Creating message
 		messageToBeMarshalled := &message.Message{
 			Body: message.MessageBody{
 				ReplyHeader: message.ReplyHeader{ReplyStatus: 0, RequestID: 0, ServiceContext: ""},
-				ReplyBody:   message.ReplyBody{TextResult: termination.GetResult()},
+				ReplyBody:   message.ReplyBody{ConvertedFile: termination.GetResult().([]byte)},
 			},
 			Header: message.MessageHeader{
 				Magic:       "MIOP",
@@ -45,22 +60,23 @@ func (thi *TextHelperInvoker) Invoke(cp *proxy.TextHelperProxy) {
 		}
 		// log.Printf("Sending { %s } to client", messageToBeMarshalled.Body.ReplyBody.TextResult)
 		messageMarshalled, _ := json.Marshal(messageToBeMarshalled)
+		messageMarshalled = encrypter.Encrypt([]byte("1234567890123456"), messageMarshalled)
 		// Send message back through server request handler
 		srh.Send(messageMarshalled)
+		convertedFile.Close()
 	}
 
 	for {
 		msgToBeUnmarshalled, _ = srh.Recieve()
+		msgToBeUnmarshalled = encrypter.Decrypt([]byte("1234567890123456"), msgToBeUnmarshalled)
 		json.Unmarshal(msgToBeUnmarshalled, &msgUnmarshalled)
 		objectKey := msgUnmarshalled.Body.RequestHeader.ObjectKey
+
 		if objectKey == cp.GetID() {
+
 			switch msgUnmarshalled.Body.RequestHeader.Operation {
-			case constants.UpperTextOperation:
-				replyHandler(textHelper.UpperText(msgUnmarshalled.Body.RequestBody.Parameters[0]))
-			case constants.LowerTextOperation:
-				replyHandler(textHelper.LowerText(msgUnmarshalled.Body.RequestBody.Parameters[0]))
-			case constants.InvertTextOperation:
-				replyHandler(textHelper.InvertText(msgUnmarshalled.Body.RequestBody.Parameters[0]))
+			case constants.ConvertFileOperation:
+				replyHandler(fileConverter.ConvertFile(msgUnmarshalled.Body.RequestBody.File))
 			}
 		} else {
 			log.Printf("Couldn't find remote object")

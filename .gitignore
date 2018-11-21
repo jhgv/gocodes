@@ -16,3 +16,5 @@
 
 # Visual Code files
 .vscode/**
+
+**/*.csv

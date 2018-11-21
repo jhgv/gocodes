@@ -25,9 +25,8 @@ func (ch *TCPClientHandler) SetupSocket(host string, port int) error {
 }
 
 func (ch *TCPClientHandler) Send(message []byte) error {
-	messageToServer := []byte(message)
 	jsonCoder := json.NewEncoder(ch.conn)
-	jsonCoder.Encode(messageToServer)
+	jsonCoder.Encode(message)
 	// if err != nil {
 	// 	return err
 	// }

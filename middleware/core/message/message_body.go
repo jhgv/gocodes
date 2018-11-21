@@ -1,7 +1,8 @@
 package message
 
 type RequestBody struct {
-	Parameters []string
+	File []byte
+	Params []interface{}
 }
 
 type RequestHeader struct {
@@ -13,7 +14,9 @@ type RequestHeader struct {
 }
 
 type ReplyBody struct {
-	TextResult string
+	ConvertedFile []byte
+	ClientProxy interface{}
+	ServiceName string
 }
 
 type ReplyHeader struct {
