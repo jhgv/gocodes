@@ -13,6 +13,7 @@ import (
 const (
 	host     = "localhost"
 	namingServerPort = 9995
+	objectID = 9999
 	objectName = "FileConverter"
 )
 
@@ -33,7 +34,7 @@ func main() {
 
 		convertedFile := fileConverterProxy.ConvertFile(file)
 
-		fmt.Printf("%s", convertedFile)
+		fmt.Printf("File: \n %s", convertedFile)
 
 		//fmt.Printf("Converted file:\n\n %s", convertedFile)
 

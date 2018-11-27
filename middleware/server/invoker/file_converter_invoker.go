@@ -1,7 +1,9 @@
 package invoker
 
 import (
+	"bytes"
 	"encoding/json"
+	"github.com/jhgv/gocodes/middleware/core/compress"
 	"github.com/jhgv/gocodes/middleware/core/security"
 	"github.com/jhgv/gocodes/middleware/utils/constants"
 	"io/ioutil"
@@ -23,6 +25,7 @@ func (fci *FileConverterInvoker) Invoke(cp proxy.FileConverterProxy) {
 	srh.SetupSocket(cp.GetHost(), cp.GetPort())
 
 	var encrypter = security.Encrypter{}
+	var z = compress.Zipper{}
 
 	var msgToBeUnmarshalled []byte
 	var msgUnmarshalled = message.Message{}
@@ -60,23 +63,32 @@ func (fci *FileConverterInvoker) Invoke(cp proxy.FileConverterProxy) {
 		}
 		// log.Printf("Sending { %s } to client", messageToBeMarshalled.Body.ReplyBody.TextResult)
 		messageMarshalled, _ := json.Marshal(messageToBeMarshalled)
-		messageMarshalled = encrypter.Encrypt([]byte("1234567890123456"), messageMarshalled)
+		var buff bytes.Buffer
+		z.Compress(&buff, messageMarshalled)
+		compressedMessageToBeMarsahlled := buff.Bytes()
+		messageMarshalled = encrypter.Encrypt([]byte("1234567890123456"), compressedMessageToBeMarsahlled)
 		// Send message back through server request handler
 		srh.Send(messageMarshalled)
 		convertedFile.Close()
 	}
 
 	for {
-		msgToBeUnmarshalled, _ = srh.Recieve()
-		msgToBeUnmarshalled = encrypter.Decrypt([]byte("1234567890123456"), msgToBeUnmarshalled)
+		encryptedMsgToBeUnmarshalled, _ := srh.Recieve()
+		// Decrypt
+		compressedMessageToBeUnmarshalled := encrypter.Decrypt([]byte("1234567890123456"), encryptedMsgToBeUnmarshalled)
+		// Decompress
+		var b bytes.Buffer
+		z.Decompress(&b, compressedMessageToBeUnmarshalled)
+		msgToBeUnmarshalled = b.Bytes()
+
 		json.Unmarshal(msgToBeUnmarshalled, &msgUnmarshalled)
 		objectKey := msgUnmarshalled.Body.RequestHeader.ObjectKey
+		file := msgUnmarshalled.Body.RequestBody.File
 
 		if objectKey == cp.GetID() {
-
 			switch msgUnmarshalled.Body.RequestHeader.Operation {
 			case constants.ConvertFileOperation:
-				replyHandler(fileConverter.ConvertFile(msgUnmarshalled.Body.RequestBody.File))
+				replyHandler(fileConverter.ConvertFile(file))
 			}
 		} else {
 			log.Printf("Couldn't find remote object")

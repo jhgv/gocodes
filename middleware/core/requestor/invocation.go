@@ -5,6 +5,7 @@ type Invocation struct {
 	host          string
 	port          int
 	operationName string
+	EnabledCompression bool
 	File    []byte
 	Params    []interface{}
 }

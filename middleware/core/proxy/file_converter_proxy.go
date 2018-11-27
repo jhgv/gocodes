@@ -21,6 +21,7 @@ func sendInvocation(fp *FileConverterProxy, methodName string, file *os.File) []
 	var inv = &requestor.Invocation{}
 	var ter *requestor.Termination
 
+	inv.EnabledCompression = true
 	inv.SetHost(fp.GetHost())
 	inv.SetPort(fp.GetPort())
 	fileInfo, _ := file.Stat()
