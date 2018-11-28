@@ -27,7 +27,6 @@ func (ni *namingInvoker) Invoke(port int) {
 	var msgUnmarshalled = message.Message{}
 
 	for {
-		log.Println("Naming server wating for biding o lookup operations...")
 		msgToBeUnmarshalled, _ = srh.Recieve()
 		json.Unmarshal(msgToBeUnmarshalled, &msgUnmarshalled)
 

@@ -2,7 +2,7 @@ package constants
 
 // Constant value for client/server application
 const (
-	NumRepetitions      int    = 1
+	NumRepetitions      int    = 200
 	LookupOperation  string = "Lookup"
 	BindOperation  string = "Bind"
 	ConvertFileOperation  string = "ConvertFile"

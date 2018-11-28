@@ -7,13 +7,11 @@ import (
 	"io/ioutil"
 )
 
-type Zipper struct{
-
-}
+type Zipper struct{}
 
 func (z *Zipper) Compress(w io.Writer, data []byte) error{
 	// Write gzipped data to the client
-	gw, err := gzip.NewWriterLevel(w, gzip.DefaultCompression)
+	gw, err := gzip.NewWriterLevel(w, gzip.BestCompression)
 	defer gw.Close()
 	gw.Write(data)
 	gw.Flush()

@@ -16,7 +16,7 @@ func NewNaming() *Naming {
 }
 
 func (n *Naming) Lookup(serviceName string) (proxy.FileConverterProxy, error) {
-	log.Printf("Looking for service %s\n", serviceName)
+	//log.Printf("Looking for service %s\n", serviceName)
 	var clientProxy proxy.FileConverterProxy
 	clientProxy, err := n.namingRepository.getClientProxyByServiceName(serviceName)
 	if err != nil {

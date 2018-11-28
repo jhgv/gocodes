@@ -1,17 +1,15 @@
 package application
 
-import "strings"
+import (
+	"github.com/jhgv/gocodes/middleware/experiments/rpc/core"
+	"strings"
+)
 
 // Textfy :
 type Textfy string
 
-// Args :
-type Args struct {
-	Text string
-}
-
 // UpperText :
-func (u *Textfy) UpperText(args *Args, reply *string) error {
+func (u *Textfy) UpperText(args *core.Args, reply *string) error {
 	*reply = strings.ToUpper(args.Text)
 	return nil
 }
