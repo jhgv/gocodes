@@ -1,0 +1,1 @@
+![Middleware diagram](presentations/middleware_diagram.png)
